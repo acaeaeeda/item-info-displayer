@@ -1,0 +1,61 @@
+ServerEvents.tick(event => {
+    event.server.entities.forEach(entity => {
+        if (entity.type == "minecraft:item"){
+            // 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
+            var restlife = `${Math.trunc((6000-entity.age)/(20))}`
+            // 获取掉落物所包含的物品
+            let id = (entity.nbt["Item"]["id"])
+            // 获取掉落物所包含的物品的数量
+            let amont = entity.nbt["Item"]["Count"]
+            
+            // 获取物品对象
+            var item = Item.of(id)
+            // 获取掉落物所包含的物品的本地化的名称
+            let localname = ` ${item.getDisplayName().getString()} `
+            // 获取物品的稀有度
+            let rarity = item.rarity
+            // 设置物品部分字体颜色
+            var name_part
+            switch (rarity) {
+                case "common":{
+                    name_part = Component.white(localname);
+                    break;
+                }
+                case "uncommon":{
+                    name_part = Component.yellow(localname);
+                    break;
+                }
+                case "rare":{
+                    name_part = Component.blue(localname);
+                    break;
+                }
+                case "epic":{
+                    name_part = Component.lightPurple(localname);
+                    break;
+                }
+            }
+
+            // 设置时间部分字体颜色
+            var time_part
+            if (restlife >= 150){
+                time_part = Component.green(restlife);
+            }else{
+                if (restlife > 50){
+                    time_part = Component.gold(restlife);
+                }else{
+                    if (restlife >= 15){
+                        time_part = Component.red(restlife);
+                    }else{
+                        time_part = Component.darkRed(restlife);
+                    }
+                }
+            }
+
+            // 显示
+            let text = Component.white(`${amont}x`).append(name_part).append(time_part)
+            entity.customNameVisible = true
+            entity.customName = text
+            
+        }
+    })
+})
