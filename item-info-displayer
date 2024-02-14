@@ -33,9 +33,9 @@ ServerEvents.tick(event => {
                     name_part = Component.lightPurple(localname);
                     break;
                 }
-				default :{
-					name_part = Component.white(localname);
-					break;
+		default :{
+			name_part = Component.white(localname);
+			break;
             }
 
             // 设置时间部分字体颜色
