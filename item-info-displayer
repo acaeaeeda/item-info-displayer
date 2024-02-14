@@ -1,8 +1,46 @@
+/**
+ * Determins whether use fabrication/item despawn control.
+ * Only being effective while related mod is loaded (and the option is enabled).
+ * Accepted values: true / false
+ * Default: false
+ */
+const fabrication_mode = false
+
+/**
+ * Determins whether show the rest life of the entity before it's despawn.
+ * Accepted values: true / false
+ * Default: true
+ */
+const show_rest_life  = true
+
+/**
+ * Determins whether change the displaying color of item's name according to it's rarity.
+ * If disabled, all of colors will be set to white.
+ * Accepted values: true / false
+ * Default: true
+ */
+const show_rarity = true
+
+/**
+ * Authorship(s): 
+ */
 ServerEvents.tick(event => {
     event.server.entities.forEach(entity => {
         if (entity.type == "minecraft:item"){
             // 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
-            var restlife = `${Math.trunc((6000-entity.age)/(20))}`
+            var restlife
+            if (fabrication_mode == false){
+                restlife = `${Math.trunc((6000-entity.age)/(20))}`
+            }else{
+                // 对于 fabrication/item despawn control 的兼容
+                var ExtraTime = entity.nbt["fabrication:ExtraTime"]
+                if (ExtraTime == null){
+                    restlife = `${Math.trunc((6000-entity.age)/(20))}`
+                }else{
+                    restlife =  `${Math.trunc((entity.nbt["fabrication:ExtraTime"] + 6000)/(20))}`
+                }
+                
+            }
             // 获取掉落物所包含的物品
             let id = (entity.nbt["Item"]["id"])
             // 获取掉落物所包含的物品的数量
