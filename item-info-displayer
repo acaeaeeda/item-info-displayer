@@ -25,9 +25,9 @@ const show_rarity = true
  * Authorship(s): 
  */
 ServerEvents.tick(event => {
-    event.server.entities.forEach(entity => {
-        if (entity.type == "minecraft:item"){
-            // 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
+	event.server.entities.forEach(entity => {
+		if (entity.type == "minecraft:item"){
+			// 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
             var restlife
             if (fabrication_mode == false){
                 restlife = `${Math.trunc((6000-entity.age)/(20))}`
@@ -41,7 +41,7 @@ ServerEvents.tick(event => {
                 }
                 
             }
-	    // 获取掉落物所包含的物品
+	    	// 获取掉落物所包含的物品
             let id = (entity.nbt["Item"]["id"])
             // 获取掉落物所包含的物品的数量
             let amont = entity.nbt["Item"]["Count"]
@@ -50,7 +50,7 @@ ServerEvents.tick(event => {
             var item = Item.of(id)
             // 获取掉落物所包含的物品的本地化的名称
             let localname = ` ${item.getDisplayName().getString()} `
-	    // 处理部分特殊物品（硬编码）
+	    	// 处理部分特殊物品（硬编码）
             if (item.id == "minecraft:potion"){
                 localname = " [药水] "
             }
@@ -87,31 +87,31 @@ ServerEvents.tick(event => {
                     name_part = Component.lightPurple(localname);
                     break;
                 }
-		default :{
-			name_part = Component.white(localname);
-			break;
-            }
+				default :{
+					name_part = Component.white(localname);
+					break;
+		            }
 
-            // 设置时间部分字体颜色
-            var time_part
-            if (restlife >= 150){
-                time_part = Component.green(restlife);
-            }else{
-                if (restlife > 50){
-                    time_part = Component.gold(restlife);
-                }else{
-                    if (restlife >= 15){
-                        time_part = Component.red(restlife);
-                    }else{
-                        time_part = Component.darkRed(restlife);
-                    }
-                }
-            }
+	            // 设置时间部分字体颜色
+	            var time_part
+	            if (restlife >= 150){
+	                time_part = Component.green(restlife);
+	            }else{
+	                if (restlife > 50){
+	                    time_part = Component.gold(restlife);
+	                }else{
+	                    if (restlife >= 15){
+	                        time_part = Component.red(restlife);
+	                    }else{
+	                        time_part = Component.darkRed(restlife);
+	                    }
+	                }
+	            }
 
-            // 显示
-            let text = Component.white(`${amont}x`).append(name_part).append(time_part)
-            entity.customNameVisible = true
-            entity.customName = text
+	            // 显示
+	            let text = Component.white(`${amont}x`).append(name_part).append(time_part)
+	            entity.customNameVisible = true
+	            entity.customName = text
             
         }
     })
