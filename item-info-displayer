@@ -41,7 +41,7 @@ ServerEvents.tick(event => {
                 }
                 
             }
-            // 获取掉落物所包含的物品
+	    // 获取掉落物所包含的物品
             let id = (entity.nbt["Item"]["id"])
             // 获取掉落物所包含的物品的数量
             let amont = entity.nbt["Item"]["Count"]
@@ -50,6 +50,22 @@ ServerEvents.tick(event => {
             var item = Item.of(id)
             // 获取掉落物所包含的物品的本地化的名称
             let localname = ` ${item.getDisplayName().getString()} `
+	    // 处理部分特殊物品（硬编码）
+            if (item.id == "minecraft:potion"){
+                localname = " [药水] "
+            }
+            if (item.id == "minecraft:splash_potion"){
+                localname = " [喷溅型药水] "
+            }
+            if (item.id == "minecraft:lingering_potion"){
+                localname = " [滞留型药水] "
+            }
+            if (item.id == 'immersiveengineering:potion_bucket'){
+                localname = " [桶装药水] "
+            }
+            if (item.id == "minecraft:tipped_arrow"){
+                localname = " [药水箭] "
+            }
             // 获取物品的稀有度
             let rarity = item.rarity
             // 设置物品部分字体颜色
