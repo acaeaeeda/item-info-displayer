@@ -21,9 +21,17 @@ const show_rest_life  = true
  */
 const show_rarity = true
 
+
 /**
- * Authorship(s): 
+ * Authorship(s): QQ酱530873
+ * Links: 
+ * https://www.mcmod.cn/author/31061.html
+ * https://github.com/acaeaeeda
+ * 
+ * Tips:
+ * Use `reload` or `kubejs reload server_scripts` to reload your changes.
  */
+
 ServerEvents.tick(event => {
 	event.server.entities.forEach(entity => {
 		if (entity.type == "minecraft:item"){
