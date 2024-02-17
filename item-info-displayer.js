@@ -21,6 +21,13 @@ const show_rest_life  = true
  */
 const show_rarity = true
 
+/**
+ * Determins whether show the name customized by players.
+ * Accepted values: true / false
+ * Default: false
+ */
+const enable_custom_name = false
+
 
 /**
  * Authorship(s): QQ酱530873
@@ -33,8 +40,7 @@ const show_rarity = true
  */
 
 ServerEvents.tick(event => {
-	event.server.entities.forEach(entity => {
-		if (entity.type == "minecraft:item"){
+	event.server.entities.filterSelector("@e[type=item]").forEach(entity => {
 			// 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
             var restlife
             if (fabrication_mode == false){
@@ -78,27 +84,33 @@ ServerEvents.tick(event => {
             let rarity = item.rarity
             // 设置物品部分字体颜色
             var name_part
+            if (enable_custom_name){
+                name_part = entity.item.displayName
+            }else{
+                name_part = Component.white(localname)
+            }
             switch (rarity) {
                 case "common":{
-                    name_part = Component.white(localname);
+                    name_part = name_part;
                     break;
                 }
                 case "uncommon":{
-                    name_part = Component.yellow(localname);
+                    name_part = name_part.yellow();
                     break;
                 }
                 case "rare":{
-                    name_part = Component.blue(localname);
+                    name_part = name_part.blue();
                     break;
                 }
                 case "epic":{
-                    name_part = Component.lightPurple(localname);
+                    name_part = name_part.lightPurple();
                     break;
                 }
-				default :{
-					name_part = Component.white(localname);
-					break;
-		            }
+                default :{
+                    name_part = name_part;
+                    break;
+                }
+            }
 
 	            // 设置时间部分字体颜色
 	            var time_part
@@ -122,5 +134,5 @@ ServerEvents.tick(event => {
 	            entity.customName = text
             
         }
-    })
+    )
 })
