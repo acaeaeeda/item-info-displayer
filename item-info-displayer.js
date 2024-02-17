@@ -111,10 +111,13 @@ ServerEvents.tick(event => {
                     break;
                 }
             }
+            if (show_rarity == false){
+                name_part = Component.white(localname);
+            }
 
-	            // 设置时间部分字体颜色
-	            var time_part
-	            if (restlife >= 150){
+	        // 设置时间部分字体颜色
+	        var time_part
+	        if (restlife >= 150){
 	                time_part = Component.green(restlife);
 	            }else{
 	                if (restlife > 50){
