@@ -127,11 +127,21 @@ ServerEvents.tick(event => {
 	                    }
 	                }
 	            }
-
-	            // 显示
-	            let text = Component.white(`${amont}x`).append(name_part).append(time_part)
-	            entity.customNameVisible = true
-	            entity.customName = text
+                
+            // 拼接文本
+            var text
+            if (show_amount){
+                text = Component.white(`${amont}x`).append(name_part)
+            }else{
+                text = name_part
+            }
+            
+            if (show_rest_life){
+                text.append(time_part)
+            }
+	        // 显示
+	        entity.customNameVisible = true
+	        entity.customName = text
             
         }
     )
