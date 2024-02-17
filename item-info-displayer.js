@@ -41,7 +41,7 @@ const enable_custom_name = false
 
 ServerEvents.tick(event => {
 	event.server.entities.filterSelector("@e[type=item]").forEach(entity => {
-			// 获取掉落物距离自然消失所剩余的时间（单位:秒,向上取整）
+			// 获取掉落物距离自然消失所剩余的时间（单位:秒,向下取整）
             var restlife
             if (fabrication_mode == false){
                 restlife = `${Math.trunc((6000-entity.age)/(20))}`
