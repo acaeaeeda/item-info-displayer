@@ -28,6 +28,12 @@ const show_rarity = true
  */
 const enable_custom_name = false
 
+/**
+ * Determins whether display the amont of item.
+ * Accepted values: true / false
+ * Default: true
+ */
+const show_amount = true
 
 /**
  * Authorship(s): QQ酱530873
@@ -37,6 +43,7 @@ const enable_custom_name = false
  * 
  * Tips:
  * Use `reload` or `kubejs reload server_scripts` to reload your changes.
+ * You can use the file freely,but you shouldn't modify the Authorships of the file.
  */
 
 ServerEvents.tick(event => {
