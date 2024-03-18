@@ -43,7 +43,6 @@ const show_amount = true
  * 
  * Tips:
  * Use `reload` or `kubejs reload server_scripts` to reload your changes.
- * You can use the file freely,but you shouldn't modify the Authorships of the file.
  */
 
 ServerEvents.tick(event => {
